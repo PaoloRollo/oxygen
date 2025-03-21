@@ -23,7 +23,7 @@ import {
   Text,
   View,
 } from '@/components/ui';
-import { getWalletAddress, roundToFirstDecimal } from '@/lib';
+import { chainIcons, getWalletAddress, roundToFirstDecimal } from '@/lib';
 
 export default function Home() {
   const router = useRouter();
@@ -52,6 +52,8 @@ export default function Home() {
   if (!user) {
     return <Redirect href="/login" />;
   }
+
+  console.log(tokens);
 
   return (
     <SafeAreaView className="max-h-sreen flex-1 bg-gray-200">
@@ -199,6 +201,7 @@ export default function Home() {
                             change: roundToFirstDecimal(
                               item.attributes?.changes?.percent_1d
                             ),
+                            chain: item.relationships.chain.data.id,
                           },
                         })
                       }
@@ -209,12 +212,22 @@ export default function Home() {
                         }`}
                       >
                         <View className="flex items-center justify-center border-r border-gray-300 py-4 pl-2 pr-4">
-                          <Image
-                            source={item.attributes.fungible_info?.icon?.url}
-                            placeholder={'https://cdn.zerion.io/eth.png'}
-                            placeholderContentFit="cover"
-                            className="size-10 rounded-full"
-                          />
+                          <View className="relative flex items-center justify-center">
+                            <Image
+                              source={item.attributes.fungible_info?.icon?.url}
+                              placeholder={'https://cdn.zerion.io/eth.png'}
+                              placeholderContentFit="cover"
+                              className="size-10 rounded-full"
+                            />
+                            <Image
+                              source={
+                                chainIcons[item.relationships.chain.data.id]
+                              }
+                              placeholder={'https://cdn.zerion.io/eth.png'}
+                              placeholderContentFit="cover"
+                              className="absolute bottom-0 right-0 size-4 rounded-full bg-white p-1"
+                            />
+                          </View>
                         </View>
                         <View className="flex w-5/6 flex-row justify-between">
                           <View className="flex flex-col">

@@ -16,6 +16,7 @@ import {
   Text,
   View,
 } from '@/components/ui';
+import { chainIcons } from '@/lib';
 type TokenParams = {
   id: string;
   address: string;
@@ -26,6 +27,7 @@ type TokenParams = {
   balance: string;
   value: string;
   change: string;
+  chain: string;
 };
 
 export default function Token() {
@@ -61,12 +63,20 @@ export default function Token() {
         <View className="px-4">
           <View className="border-x border-gray-300 bg-white p-4">
             <View className="flex-row items-center gap-x-2">
-              <Image
-                source={params.icon}
-                placeholder={'https://cdn.zerion.io/eth.png'}
-                placeholderContentFit="cover"
-                className="size-12 rounded-full"
-              />
+              <View className="relative flex items-center justify-center">
+                <Image
+                  source={params.icon}
+                  placeholder={'https://cdn.zerion.io/eth.png'}
+                  placeholderContentFit="cover"
+                  className="size-12 rounded-full"
+                />
+                <Image
+                  source={chainIcons[params.chain]}
+                  placeholder={'https://cdn.zerion.io/eth.png'}
+                  placeholderContentFit="cover"
+                  className="absolute bottom-0 right-0 size-4 rounded-full bg-white"
+                />
+              </View>
               <View>
                 <Text className="text-2xl font-semibold">{params.name}</Text>
                 <Text className="text-lg text-gray-500">{params.symbol}</Text>

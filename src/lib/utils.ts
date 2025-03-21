@@ -67,3 +67,59 @@ export const sendTransaction = async (
     ],
   });
 };
+
+interface ChainIconsMap {
+  [key: string]: string;
+}
+
+export const chainIcons: ChainIconsMap = {
+  // goerli:
+  //   "https://github.com/thirdweb-dev/chain-icons/blob/main/png/ethereum/32.png?raw=true",
+  /*sepolia:
+    "https://github.com/thirdweb-dev/chain-icons/blob/main/png/ethereum/32.png?raw=true",
+    */
+  'taiko mainnet': 'https://avatars.githubusercontent.com/u/99078433?s=280&v=4',
+  holesky:
+    'https://github.com/thirdweb-dev/chain-icons/blob/main/png/ethereum/32.png?raw=true',
+  'gnosis chiado':
+    'https://github.com/thirdweb-dev/chain-icons/blob/main/png/gnosis-gno/32.png?raw=true',
+  'linea goerli testnet':
+    'https://github.com/thirdweb-dev/chain-icons/blob/main/png/ethereum/32.png?raw=true',
+  'optimism goerli':
+    'https://github.com/thirdweb-dev/chain-icons/blob/main/png/optimism/32.png?raw=true',
+  'polygon mumbai':
+    'https://github.com/thirdweb-dev/chain-icons/blob/main/png/polygon/32.png?raw=true',
+  gnosis:
+    'https://github.com/thirdweb-dev/chain-icons/blob/main/png/gnosis-gno/32.png?raw=true',
+  arbitrum:
+    'https://github.com/thirdweb-dev/chain-icons/blob/main/png/arbitrum/32.png?raw=true',
+  'arbitrum one':
+    'https://github.com/thirdweb-dev/chain-icons/blob/main/png/arbitrum/32.png?raw=true',
+  ethereum:
+    'https://raw.githubusercontent.com/thirdweb-dev/chain-icons/main/png/ethereum/32.png',
+  polygon:
+    'https://raw.githubusercontent.com/thirdweb-dev/chain-icons/main/png/polygon/32.png',
+  optimism:
+    'https://raw.githubusercontent.com/thirdweb-dev/chain-icons/main/png/optimism/32.png',
+  linea:
+    'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/linea.svg',
+  base: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/base.svg',
+  fantom:
+    'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/fantom.svg',
+  avalanche:
+    'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/avalanche.svg',
+  'bnb smart chain':
+    'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/bsc.svg',
+  aurora:
+    'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/aurora.png',
+  'zksync era':
+    'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/zksync.svg',
+  okc: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/okx.svg',
+  scroll:
+    'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/scroll.png',
+  blast:
+    'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/blast.png',
+  mode: 'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/mode.png',
+  //mantle:
+  //"https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/mantle.png",
+};
