@@ -53,8 +53,6 @@ export default function Home() {
     return <Redirect href="/login" />;
   }
 
-  console.log(tokens);
-
   return (
     <SafeAreaView className="max-h-sreen flex-1 bg-gray-200">
       <FocusAwareStatusBar />

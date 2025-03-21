@@ -1,4 +1,4 @@
-import { type PrivyUser } from '@privy-io/expo';
+import { type ConnectedEthereumWallet, type PrivyUser } from '@privy-io/expo';
 import { Linking } from 'react-native';
 import type { StoreApi, UseBoundStore } from 'zustand';
 
@@ -41,4 +41,29 @@ export const roundToFirstDecimal = (value: number) => {
   if (!value) return '0';
   const decimalPlaces = 1 - Math.floor(Math.log10(value));
   return value.toFixed(decimalPlaces);
+};
+
+export const sendTransaction = async (
+  wallet: ConnectedEthereumWallet,
+  data: any
+) => {
+  const provider = await wallet.getProvider();
+  const accounts = await provider.request({
+    method: 'eth_requestAccounts',
+  });
+
+  console.log(data.value, typeof data.value);
+
+  // Send transaction (will be signed and populated)
+  await provider.request({
+    method: 'eth_sendTransaction',
+    params: [
+      {
+        to: data.to,
+        value: data.value === '0' ? 0 : data.value,
+        data: data.data,
+        from: accounts[0],
+      },
+    ],
+  });
 };

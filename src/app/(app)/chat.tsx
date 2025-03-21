@@ -15,6 +15,7 @@ import {
 import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, TextInput } from 'react-native';
 import Markdown from 'react-native-markdown-display';
+import { twMerge } from 'tailwind-merge';
 
 import {
   FocusAwareStatusBar,
@@ -24,7 +25,11 @@ import {
   Text,
   View,
 } from '@/components/ui';
-import { getWalletAddress } from '@/lib';
+import { BridgeMessage } from '@/components/ui/messages/bridge-message';
+import { DepositMessage } from '@/components/ui/messages/deposit-message';
+import { SwapMessage } from '@/components/ui/messages/swap-message';
+import { TransferMessage } from '@/components/ui/messages/transfer-message';
+import { WithdrawMessage } from '@/components/ui/messages/withdraw-message';
 
 export default function Chat() {
   const { user } = usePrivy();
@@ -34,11 +39,12 @@ export default function Chat() {
     api: 'http://localhost:3000/api/chat',
     onError: (error) => console.error(error, 'ERROR'),
     headers: {
-      'x-brian-address': getWalletAddress(user) ?? '',
+      // 'x-brian-address': getWalletAddress(user) ?? '',
+      'x-brian-address': '0xA9bC8A58B39935BA3D8D1Ce4b0d3383153F184E1',
     },
   });
 
-  const [_, setRecognizing] = useState(false);
+  const [recognizing, setRecognizing] = useState(false);
   const [transcript, setTranscript] = useState('');
 
   useSpeechRecognitionEvent('start', () => setRecognizing(true));
@@ -71,11 +77,26 @@ export default function Chat() {
   };
 
   const Message = ({ part, role }: { part: any; role: string }) => {
-    // const result = part?.toolInvocation?.result;
+    const result = part?.toolInvocation?.result;
 
-    // const renderResult = (result: any) => {
-    //   return <div>{JSON.stringify(result)}</div>;
-    // };
+    const renderResult = (result: any) => {
+      if (result.action === 'swap') {
+        return <SwapMessage {...result} />;
+      }
+      if (result.action === 'bridge') {
+        return <BridgeMessage {...result} />;
+      }
+      if (result.action === 'deposit') {
+        return <DepositMessage {...result} />;
+      }
+      if (result.action === 'transfer') {
+        return <TransferMessage {...result} />;
+      }
+      if (result.action === 'withdraw') {
+        return <WithdrawMessage {...result} />;
+      }
+      return <Markdown>{result.text}</Markdown>;
+    };
 
     const renderThinkingStep = (part: any) => {
       console.log('THINKING STEP', part);
@@ -198,6 +219,9 @@ export default function Chat() {
           ) : part.type === 'tool-invocation' &&
             part.toolInvocation.state === 'call' ? (
             renderThinkingStep(part)
+          ) : part.type === 'tool-invocation' &&
+            part.toolInvocation.state === 'result' ? (
+            renderResult(result)
           ) : (
             <Markdown
               style={{
@@ -248,7 +272,7 @@ export default function Chat() {
                 ) {
                   return (
                     <View
-                      key={`${part.type}-${index}-${item.role}`}
+                      key={`${part.type}-${index}-${item.role}-${part.id}`}
                       className="-mt-0"
                     />
                   );
@@ -256,7 +280,7 @@ export default function Chat() {
 
                 return (
                   <Message
-                    key={`${part.type}-${index}-${item.role}`}
+                    key={`${part.type}-${index}-${item.role}-${part.id}`}
                     part={part}
                     role={item.role}
                   />
@@ -273,8 +297,12 @@ export default function Chat() {
             <View className="flex-row items-center gap-x-2">
               <Pressable
                 onPress={handleStart}
-                className="rounded-full bg-black p-2"
-                // disabled={recognizing)}
+                className={twMerge(
+                  'rounded-full  p-2',
+                  recognizing && 'bg-green-600',
+                  !recognizing && 'bg-black'
+                )}
+                disabled={recognizing}
               >
                 <AudioWaveformIcon size={20} className="text-white" />
               </Pressable>

@@ -6,18 +6,14 @@ import { sendTransaction } from '@/lib';
 import { Text, View } from '..';
 import { Button } from '../button';
 
-type SwapMessageProps = {
-  action: 'swap';
+type DepositMessageProps = {
+  action: 'deposit';
   inputToken: any;
   outputToken: any;
   data: any[];
 };
 
-export const SwapMessage = ({
-  inputToken,
-  outputToken,
-  data,
-}: SwapMessageProps) => {
+export const DepositMessage = ({ data }: DepositMessageProps) => {
   const { wallets } = useEmbeddedEthereumWallet();
   const [isExecuting, setIsExecuting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -42,15 +38,12 @@ export const SwapMessage = ({
 
   return (
     <View className="flex flex-col gap-y-2 pt-3">
-      <Text>
-        Click the button to confirm your swap from {inputToken.symbol} to{' '}
-        {outputToken.symbol}.
-      </Text>
+      <Text>Click the button to confirm the deposit of your tokens.</Text>
       <View className="flex flex-row gap-x-3">
         {!isSuccess && !isError && (
           <Button
             key={data[0].solver}
-            label={`Confirm swap`}
+            label={`Confirm deposit`}
             loading={isExecuting}
             disabled={isExecuting}
             onPress={() => executeTransaction(data[0].data)}
@@ -69,7 +62,7 @@ export const SwapMessage = ({
         {isSuccess && !isError && (
           <Button
             key={data[0].solver}
-            label={`Swap executed!`}
+            label={`Deposit executed!`}
             variant="success"
             // onPress={() => executeTransaction(data[0].data)}
           />

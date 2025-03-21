@@ -33,6 +33,11 @@ const button = tv({
         label: 'text-white',
         indicator: 'text-white',
       },
+      success: {
+        container: 'bg-green-600',
+        label: 'text-black',
+        indicator: 'text-black',
+      },
       ghost: {
         container: 'bg-transparent',
         label: 'text-black underline dark:text-white',
