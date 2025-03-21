@@ -55,6 +55,13 @@ export default function TabLayout() {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="token/[address]"
+        options={{
+          title: 'Token',
+          headerShown: false,
+        }}
+      />
     </Stack>
   );
 }

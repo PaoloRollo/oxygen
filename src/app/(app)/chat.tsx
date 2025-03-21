@@ -38,7 +38,7 @@ export default function Chat() {
     },
   });
 
-  const [recognizing, setRecognizing] = useState(false);
+  const [_, setRecognizing] = useState(false);
   const [transcript, setTranscript] = useState('');
 
   useSpeechRecognitionEvent('start', () => setRecognizing(true));
@@ -71,11 +71,11 @@ export default function Chat() {
   };
 
   const Message = ({ part, role }: { part: any; role: string }) => {
-    const result = part?.toolInvocation?.result;
+    // const result = part?.toolInvocation?.result;
 
-    const renderResult = (result: any) => {
-      return <div>{JSON.stringify(result)}</div>;
-    };
+    // const renderResult = (result: any) => {
+    //   return <div>{JSON.stringify(result)}</div>;
+    // };
 
     const renderThinkingStep = (part: any) => {
       console.log('THINKING STEP', part);
@@ -233,6 +233,7 @@ export default function Chat() {
             className="flex-1 bg-gray-100 py-2"
             data={messages}
             automaticallyAdjustContentInsets
+            // @ts-ignore
             renderItem={({ item, index }) =>
               item.parts.map((part: any) => {
                 const result = part?.toolInvocation?.result;

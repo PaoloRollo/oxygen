@@ -53,6 +53,8 @@ export default function Home() {
     return <Redirect href="/login" />;
   }
 
+  console.log(tokens);
+
   return (
     <SafeAreaView className="max-h-sreen flex-1 bg-gray-200">
       <FocusAwareStatusBar />
@@ -177,43 +179,70 @@ export default function Home() {
                 <List
                   data={tokens.filter((token) => token.attributes.value > 0)}
                   renderItem={({ item, index }) => (
-                    <View
-                      className={`flex flex-row items-center gap-x-2 border-b border-gray-300 px-2 ${
-                        index === 0 ? 'border-t' : ''
-                      }`}
-                    >
-                      <View className="flex items-center justify-center border-r border-gray-300 py-4 pl-2 pr-4">
-                        <Image
-                          source={item.attributes.fungible_info?.icon?.url}
-                          placeholder={'https://cdn.zerion.io/eth.png'}
-                          placeholderContentFit="cover"
-                          className="size-10 rounded-full"
-                        />
-                      </View>
-                      <View className="flex w-5/6 flex-row justify-between">
-                        <View className="flex flex-col">
-                          <Text className="text-lg font-semibold">
-                            {item.attributes.fungible_info.symbol}
-                          </Text>
-                          <Text className="text-sm text-gray-500">
-                            {roundToFirstDecimal(
+                    <Pressable
+                      onPress={() =>
+                        router.push({
+                          // pathname: '/token/[address]',
+                          // @ts-ignore
+                          pathname: `/token/${item.id.split('-')[0]}`,
+                          params: {
+                            id: item.relationships.fungible.data.id,
+                            address: item.id.split('-')[0],
+                            symbol: item.attributes.fungible_info.symbol,
+                            name: item.attributes.fungible_info.name,
+                            icon: item.attributes.fungible_info?.icon?.url,
+                            price: roundToFirstDecimal(
+                              item.attributes.price ?? 0
+                            ),
+                            balance: roundToFirstDecimal(
                               item.attributes.quantity.float
-                            )}
-                          </Text>
-                        </View>
-                        <View className="flex flex-col items-end">
-                          <Text className="text-lg font-semibold">
-                            ${roundToFirstDecimal(item.attributes.value)}
-                          </Text>
-                          <Text className="text-sm text-gray-500">
-                            {roundToFirstDecimal(
+                            ),
+                            value: roundToFirstDecimal(item.attributes.value),
+                            change: roundToFirstDecimal(
                               item.attributes?.changes?.percent_1d
-                            )}
-                            %
-                          </Text>
+                            ),
+                          },
+                        })
+                      }
+                    >
+                      <View
+                        className={`flex flex-row items-center gap-x-2 border-b border-gray-300 px-2 ${
+                          index === 0 ? 'border-t' : ''
+                        }`}
+                      >
+                        <View className="flex items-center justify-center border-r border-gray-300 py-4 pl-2 pr-4">
+                          <Image
+                            source={item.attributes.fungible_info?.icon?.url}
+                            placeholder={'https://cdn.zerion.io/eth.png'}
+                            placeholderContentFit="cover"
+                            className="size-10 rounded-full"
+                          />
+                        </View>
+                        <View className="flex w-5/6 flex-row justify-between">
+                          <View className="flex flex-col">
+                            <Text className="text-lg font-semibold">
+                              {item.attributes.fungible_info.symbol}
+                            </Text>
+                            <Text className="text-sm text-gray-500">
+                              {roundToFirstDecimal(
+                                item.attributes.quantity.float
+                              )}
+                            </Text>
+                          </View>
+                          <View className="flex flex-col items-end">
+                            <Text className="text-lg font-semibold">
+                              ${roundToFirstDecimal(item.attributes.value)}
+                            </Text>
+                            <Text className="text-sm text-gray-500">
+                              {roundToFirstDecimal(
+                                item.attributes?.changes?.percent_1d
+                              )}
+                              %
+                            </Text>
+                          </View>
                         </View>
                       </View>
-                    </View>
+                    </Pressable>
                   )}
                 />
               </View>
