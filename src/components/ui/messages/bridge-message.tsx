@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { sendTransaction } from '@/lib';
 
-import { Text, View } from '..';
+import { showError, Text, View } from '..';
 import { Button } from '../button';
 
 type BridgeMessageProps = {
@@ -29,7 +29,7 @@ export const BridgeMessage = ({ data }: BridgeMessageProps) => {
       }
       setIsSuccess(true);
     } catch (error) {
-      console.error(error);
+      showError(error as any);
       setIsError(true);
     } finally {
       setIsExecuting(false);

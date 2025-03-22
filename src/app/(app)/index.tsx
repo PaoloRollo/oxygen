@@ -3,17 +3,17 @@ import { usePrivy } from '@privy-io/expo';
 import { useFundWallet } from '@privy-io/expo';
 import { Redirect, useRouter } from 'expo-router';
 import {
-  ArrowBigDownIcon,
-  ArrowBigUpIcon,
   CogIcon,
-  DownloadIcon,
   HandCoinsIcon,
   MessageCircleIcon,
+  PiggyBankIcon,
+  RefreshCcwIcon,
 } from 'lucide-react-native';
 import React, { useEffect } from 'react';
 import { base } from 'viem/chains';
 
 import { useTokens, useWallet } from '@/api';
+import { BalanceComponent } from '@/components/balance';
 import {
   FocusAwareStatusBar,
   Image,
@@ -53,8 +53,6 @@ export default function Home() {
     return <Redirect href="/login" />;
   }
 
-  console.log(tokens);
-
   return (
     <SafeAreaView className="max-h-sreen flex-1 bg-gray-200">
       <FocusAwareStatusBar />
@@ -70,51 +68,7 @@ export default function Home() {
           <View className="w-2/3 border-r border-gray-300" />
         </View>
         <View className="px-4">
-          <View className="border-x border-gray-300 bg-white p-4">
-            <Text className="text-2xl text-gray-600">Balance</Text>
-            <Text className="mt-2 text-5xl font-semibold">
-              ${data?.total.positions ? data?.total.positions.toFixed(2) : '0'}
-            </Text>
-            <View className="flex flex-row justify-between">
-              <View className="flex flex-col">
-                <Text className="mt-4 text-xl text-gray-400">
-                  Last day change (%)
-                </Text>
-                <View className="flex flex-row items-center gap-x-2">
-                  {data?.changes.percent_1d && data?.changes.percent_1d > 0 ? (
-                    <ArrowBigUpIcon className="size-4 text-green-500" />
-                  ) : (
-                    <ArrowBigDownIcon className="size-4 text-red-500" />
-                  )}
-                  <Text className="mt-2 text-2xl font-semibold">
-                    {data?.changes.percent_1d
-                      ? data?.changes.percent_1d.toFixed(2)
-                      : '0'}
-                    %
-                  </Text>
-                </View>
-              </View>
-              <View className="flex flex-col">
-                <Text className="mt-4 text-xl text-gray-400">
-                  Last day change
-                </Text>
-                <View className="just flex flex-row items-center gap-x-2">
-                  {data?.changes.absolute_1d &&
-                  data?.changes.absolute_1d > 0 ? (
-                    <ArrowBigUpIcon className="size-4 text-green-500" />
-                  ) : (
-                    <ArrowBigDownIcon className="size-4 text-red-500" />
-                  )}
-                  <Text className="mt-2 text-2xl font-semibold">
-                    {data?.changes.absolute_1d
-                      ? (data?.changes.absolute_1d).toFixed(2)
-                      : '0'}
-                    $
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </View>
+          <BalanceComponent data={data} />
         </View>
         <View className="border border-gray-300">
           <View className="flex w-full flex-row px-4">
@@ -131,14 +85,12 @@ export default function Home() {
               className="flex w-1/4 flex-col items-center justify-center gap-y-2 border-r border-gray-300 py-6"
               onPress={async () => {
                 try {
-                  console.log('funding wallet');
                   await fundWallet({
                     address: getWalletAddress(user)!,
                     chain: base,
                     amount: '1',
                     asset: 'native-currency',
                   });
-                  console.log('funded wallet');
                 } catch (error) {
                   console.error(error);
                 }
@@ -151,12 +103,15 @@ export default function Home() {
             </Pressable>
             <Pressable
               className="flex w-1/4 flex-col items-center justify-center gap-y-2 border-r border-gray-300 py-6"
-              onPress={() => router.push('/receive')}
+              onPress={() => {
+                refetch();
+                refetchTokens();
+              }}
             >
               <View className="aspect-square rounded-lg bg-black p-2">
-                <DownloadIcon className="h-24 text-white" size={24} />
+                <RefreshCcwIcon className="h-24 text-white" size={24} />
               </View>
-              <Text className="text-xl">Receive</Text>
+              <Text className="text-xl">Refresh</Text>
             </Pressable>
             <Pressable
               className="flex w-1/4 flex-col items-center justify-center gap-y-2 border-r border-gray-300 py-6"
@@ -173,10 +128,11 @@ export default function Home() {
           <Text className="text-2xl font-semibold">Tokens</Text>
         </View>
         <View className="border-b border-gray-300 px-4">
-          {tokens && (
+          {tokens && tokens.length > 0 && (
             <View className="h-2/3 border-x border-b border-gray-300 bg-white">
               <View className="h-full">
                 <List
+                  estimatedItemSize={64}
                   data={tokens.filter((token) => token.attributes.value > 0)}
                   renderItem={({ item, index }) => (
                     <Pressable
@@ -257,6 +213,14 @@ export default function Home() {
                   )}
                 />
               </View>
+            </View>
+          )}
+          {tokens && tokens.length === 0 && (
+            <View className="flex h-2/3 flex-col items-center justify-center border-x border-b border-gray-300 bg-white">
+              <PiggyBankIcon className="h-64 text-black/50" size={64} />
+              <Text className="text-center text-xl font-semibold text-black/50">
+                You don't have any tokens yet.
+              </Text>
             </View>
           )}
         </View>

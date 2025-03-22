@@ -30,6 +30,7 @@ import { DepositMessage } from '@/components/ui/messages/deposit-message';
 import { SwapMessage } from '@/components/ui/messages/swap-message';
 import { TransferMessage } from '@/components/ui/messages/transfer-message';
 import { WithdrawMessage } from '@/components/ui/messages/withdraw-message';
+import { getWalletAddress } from '@/lib';
 
 export default function Chat() {
   const { user } = usePrivy();
@@ -39,8 +40,8 @@ export default function Chat() {
     api: 'http://localhost:3000/api/chat',
     onError: (error) => console.error(error, 'ERROR'),
     headers: {
-      // 'x-brian-address': getWalletAddress(user) ?? '',
-      'x-brian-address': '0xA9bC8A58B39935BA3D8D1Ce4b0d3383153F184E1',
+      'x-brian-address': getWalletAddress(user) ?? '',
+      // 'x-brian-address': '0xA9bC8A58B39935BA3D8D1Ce4b0d3383153F184E1',
     },
   });
 
@@ -99,7 +100,6 @@ export default function Chat() {
     };
 
     const renderThinkingStep = (part: any) => {
-      console.log('THINKING STEP', part);
       if (part.toolInvocation.toolName === 'getChainsTool') {
         return (
           <Text

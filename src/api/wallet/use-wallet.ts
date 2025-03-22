@@ -13,7 +13,7 @@ export const useWallet = createQuery<Response, Variables, AxiosError>({
     if (!walletAddress) return null;
     try {
       const response = await client.get(
-        `https://api.zerion.io/v1/wallets/${'0xA9bC8A58B39935BA3D8D1Ce4b0d3383153F184E1'}/portfolio?currency=usd&filter[positions]=only_simple`,
+        `https://api.zerion.io/v1/wallets/${walletAddress}/portfolio?currency=usd&filter[positions]=only_simple`,
         {
           headers: {
             Accept: 'application/json',

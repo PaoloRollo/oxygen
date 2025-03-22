@@ -16,7 +16,7 @@ import {
   Text,
   View,
 } from '@/components/ui';
-import { Github, Share, Website } from '@/components/ui/icons';
+import { Github, Website } from '@/components/ui/icons';
 import { translate } from '@/lib';
 
 export default function Settings() {
@@ -30,7 +30,7 @@ export default function Settings() {
       <FocusAwareStatusBar />
       <View className="flex-1 flex-col">
         <View className="flex flex-row border border-gray-300 px-4">
-          <View className="flex w-1/3 flex-row items-center border-x border-gray-300 py-4 pr-2">
+          <View className="flex w-1/3 flex-row items-center gap-x-2 border-x border-gray-300 py-4 pr-2">
             <Pressable onPress={() => router.back()} className="">
               <ChevronLeftIcon size={24} className="text-black" />
             </Pressable>
@@ -57,7 +57,7 @@ export default function Settings() {
               </View>
             </View>
           </View>
-
+          {/* 
           <View className="mt-4 border-x border-t border-gray-300 bg-white">
             <Text className="border-b border-gray-300 px-4 py-2 text-lg text-gray-500">
               {translate('settings.support_us')}
@@ -68,7 +68,7 @@ export default function Settings() {
                 <Text className="text-lg">Share</Text>
               </View>
             </Pressable>
-          </View>
+          </View> */}
 
           <View className="mt-4 border-x border-t border-gray-300 bg-white">
             <Text className="border-b border-gray-300 px-4 py-2 text-lg text-gray-500">

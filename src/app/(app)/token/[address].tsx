@@ -5,9 +5,8 @@ import {
   ArrowBigUpIcon,
   ChevronLeftIcon,
 } from 'lucide-react-native';
-import React, { useMemo } from 'react';
+import React from 'react';
 
-import { useTokenChart } from '@/api';
 import {
   FocusAwareStatusBar,
   Image,
@@ -34,18 +33,16 @@ export default function Token() {
   const router = useRouter();
   const params = useLocalSearchParams<TokenParams>();
   const changeValue = Number(params.change);
-  const { data: chartData } = useTokenChart({
-    variables: { tokenAddress: params.id },
-  });
+  // const { data: chartData } = useTokenChart({
+  //   variables: { tokenAddress: params.id },
+  // });
 
-  const chartDataPoints = useMemo(() => {
-    if (!chartData) return [];
-    return chartData.map((point) => ({
-      value: point[1],
-    }));
-  }, [chartData]);
-
-  console.log(chartDataPoints);
+  // const chartDataPoints = useMemo(() => {
+  //   if (!chartData) return [];
+  //   return chartData.map((point) => ({
+  //     value: point[1],
+  //   }));
+  // }, [chartData]);
 
   return (
     <SafeAreaView className="flex-1 bg-gray-200">

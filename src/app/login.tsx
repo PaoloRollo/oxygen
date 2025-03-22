@@ -14,13 +14,10 @@ export default function Login() {
   const [authStatus, setAuthStatus] = useState<'idle' | 'otp'>('idle');
   const [email, setEmail] = useState<string>('');
 
-  console.log(user);
-
   const onSubmit: LoginFormProps['onSubmit'] = async (data) => {
     try {
-      console.log('data', data);
       const result = await sendCode({ email: data.email });
-      console.log('result', result);
+
       if (result.success) {
         setAuthStatus('otp');
         setEmail(data.email);
@@ -28,14 +25,11 @@ export default function Login() {
     } catch (error) {
       console.error(error);
     }
-    // router.push('/');
   };
 
   const onOTPSubmit: OTPFormProps['onSubmit'] = async (data) => {
-    console.log('data', data);
     try {
       const result = await loginWithCode({ code: data.code, email });
-      console.log('result', result);
 
       if (result) {
         router.push('/');

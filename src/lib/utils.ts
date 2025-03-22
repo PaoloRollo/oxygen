@@ -52,7 +52,13 @@ export const sendTransaction = async (
     method: 'eth_requestAccounts',
   });
 
-  console.log(data.value, typeof data.value);
+  console.log(data.chainId);
+  // console.log(data);
+
+  await provider.request({
+    method: 'wallet_switchEthereumChain',
+    params: [{ chainId: `0x${data.chainId.toString(16)}` }],
+  });
 
   // Send transaction (will be signed and populated)
   await provider.request({
@@ -60,7 +66,7 @@ export const sendTransaction = async (
     params: [
       {
         to: data.to,
-        value: data.value === '0' ? 0 : data.value,
+        value: !data.value || data.value === '0' ? 0 : Number(data.value),
         data: data.data,
         from: accounts[0],
       },
