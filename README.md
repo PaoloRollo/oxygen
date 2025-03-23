@@ -4,7 +4,7 @@ Oxygen - AI-Powered Multi-Chain Wallet
 </h1>
 
 <p align="center">
-  Built for ETHGlobal Trifecta Agent Hackathon 2024
+  Built for ETHGlobal Trifecta Agent Hackathon 2025
 </p>
 
 ## 🌟 Overview
@@ -116,7 +116,7 @@ EXPO_PUBLIC_ZERION_API_KEY=your_zerion_api_key
 
 ## 🏆 Hackathon Details
 
-Built during the ETHGlobal Trifecta Agent Hackathon 2024, Oxygen aims to demonstrate the potential of AI integration in crypto wallets, making blockchain technology more accessible to mainstream users.
+Built during the ETHGlobal Trifecta Agent Hackathon 2025, Oxygen aims to demonstrate the potential of AI integration in crypto wallets, making blockchain technology more accessible to mainstream users.
 
 ## 🙏 Acknowledgments
 
