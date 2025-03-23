@@ -37,7 +37,7 @@ export default function Chat() {
   const router = useRouter();
   const { messages, handleInputChange, input, handleSubmit } = useChat({
     fetch: expoFetch as unknown as typeof globalThis.fetch,
-    api: 'http://localhost:3000/api/chat',
+    api: 'https://chat.brianknows.org/api/chat',
     onError: (error) => console.error(error, 'ERROR'),
     headers: {
       'x-brian-address': getWalletAddress(user) ?? '',

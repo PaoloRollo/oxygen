@@ -1,49 +1,126 @@
 <h1 align="center">
   <img alt="logo" src="./assets/icon.png" width="124px" style="border-radius:10px"/><br/>
-Mobile App </h1>
+Oxygen - AI-Powered Multi-Chain Wallet
+</h1>
 
-> This Project is based on [Obytes starter](https://starter.obytes.com)
+<p align="center">
+  Built for ETHGlobal Trifecta Agent Hackathon 2024
+</p>
 
-## Requirements
+## 🌟 Overview
 
-- [React Native dev environment ](https://reactnative.dev/docs/environment-setup)
-- [Node.js LTS release](https://nodejs.org/en/)
-- [Git](https://git-scm.com/)
-- [Watchman](https://facebook.github.io/watchman/docs/install#buildinstall), required only for macOS or Linux users
-- [Pnpm](https://pnpm.io/installation)
-- [Cursor](https://www.cursor.com/) or [VS Code Editor](https://code.visualstudio.com/download) ⚠️ Make sure to install all recommended extension from `.vscode/extensions.json`
+Oxygen is an innovative AI-powered crypto wallet that simplifies the complexity of managing digital assets across multiple chains. By integrating natural language processing, voice recognition and intelligent automation, Oxygen makes crypto operations accessible to everyone.
 
-## 👋 Quick start
+## 🚀 Key Features
 
-Clone the repo to your machine and install deps :
+- **AI-Powered Assistant**: Natural language interactions for managing your crypto assets
+- **Multi-Chain Support**: Seamless management of assets across different blockchain networks
+- **Smart Chat Interface**: Execute complex operations through simple conversations
+- **Real-Time Portfolio Tracking**: Monitor your assets and performance across chains
+- **Voice Commands**: Hands-free operation for common tasks
 
-```sh
-git clone https://github.com/user/repo-name
+## 🛠 Tech Stack
 
-cd ./repo-name
+### Core Technologies
 
+- **React Native & Expo**: For cross-platform mobile development
+- **TypeScript**: For type-safe code
+- **Expo Router**: File-based routing system
+- **Nativewind**: Tailwind CSS for React Native
+
+### Blockchain & Web3
+
+- **Privy**: For wallet management and authentication
+- **Viem & Wagmi**: Ethereum interaction libraries
+
+### AI & Data
+
+- **AI SDK**: Custom AI integration for natural language processing
+- **React Query & React Query Kit**: Data fetching and caching
+- **Zerion API**: Portfolio tracking and analytics
+- **BrianKnowsAI APIs**: API for the AI assistant
+
+### State Management & Storage
+
+- **Zustand**: Global state management
+- **MMKV**: High-performance key-value storage
+
+### UI/UX
+
+- **React Native Reanimated**: Smooth animations
+- **React Native Gesture Handler**: Touch interactions
+- **React Native SVG**: Vector graphics support
+
+## 📁 Project Structure
+
+```
+src/
+├── api/ # API integrations and queries
+├── app/ # Expo Router screens and navigation
+├── components/ # Reusable UI components
+├── lib/ # Shared utilities and hooks
+└── types/ # TypeScript type definitions
+```
+
+## 🚀 Getting Started
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/your-username/oxygen-wallet
+cd oxygen-wallet
+```
+
+2. **Install dependencies**
+
+```bash
 pnpm install
 ```
 
-To run the app on ios
+3. **Start the development server**
 
-```sh
+```bash
+# For iOS
 pnpm ios
-```
 
-To run the app on Android
-
-```sh
+# For Android
 pnpm android
 ```
 
-## ✍️ Documentation
+## 🔧 Configuration
 
-- [Rules and Conventions](https://starter.obytes.com/getting-started/rules-and-conventions/)
-- [Project structure](https://starter.obytes.com/getting-started/project-structure)
-- [Environment vars and config](https://starter.obytes.com/getting-started/environment-vars-config)
-- [UI and Theming](https://starter.obytes.com/ui-and-theme/ui-theming)
-- [Components](https://starter.obytes.com/ui-and-theme/components)
-- [Forms](https://starter.obytes.com/ui-and-theme/Forms)
-- [Data fetching](https://starter.obytes.com/guides/data-fetching)
-- [Contribute to starter](https://starter.obytes.com/how-to-contribute/)
+Create a `.env` file in the root directory with your API keys:
+
+```
+EXPO_PUBLIC_PRIVY_APP_ID=your_privy_app_id
+EXPO_PUBLIC_PRIVY_CLIENT_ID=your_privy_client_id
+EXPO_PUBLIC_ZERION_API_KEY=your_zerion_api_key
+```
+
+## 🔒 Security
+
+- All transactions require explicit user confirmation
+- No private keys are stored on device
+- AI suggestions are verified before execution
+- Regular security audits and updates
+
+## 🎯 Future Roadmap
+
+- [ ] Social recovery options
+- [ ] DeFi strategy recommendations
+- [ ] Advanced portfolio analytics
+
+## 👥 Team
+
+- orbulo: this is a solo hackathon project!
+
+## 🏆 Hackathon Details
+
+Built during the ETHGlobal Trifecta Agent Hackathon 2024, Oxygen aims to demonstrate the potential of AI integration in crypto wallets, making blockchain technology more accessible to mainstream users.
+
+## 🙏 Acknowledgments
+
+- ETHGlobal for hosting the hackathon
+- Privy team for wallet infrastructure
+- BrianKnowsAI for the AI APIs
+- Zerion for the portfolio tracking API
