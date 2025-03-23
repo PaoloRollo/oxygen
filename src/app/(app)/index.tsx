@@ -9,7 +9,8 @@ import {
   PiggyBankIcon,
   RefreshCcwIcon,
 } from 'lucide-react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator } from 'react-native';
 import { base } from 'viem/chains';
 
 import { useTokens, useWallet } from '@/api';
@@ -30,12 +31,24 @@ export default function Home() {
   const { user } = usePrivy();
   const { fundWallet } = useFundWallet();
 
-  const { data, refetch } = useWallet({
+  const {
+    data,
+    isLoading: isLoadingWallet,
+    refetch,
+  } = useWallet({
     variables: { walletAddress: getWalletAddress(user) },
   });
-  const { data: tokens, refetch: refetchTokens } = useTokens({
+  const {
+    data: tokens,
+    isLoading: isLoadingTokens,
+    refetch: refetchTokens,
+  } = useTokens({
     variables: { walletAddress: getWalletAddress(user) },
   });
+
+  const [isLoading, setIsLoading] = useState(
+    isLoadingWallet || isLoadingTokens
+  );
 
   useEffect(() => {
     if (!user) return;
@@ -54,9 +67,16 @@ export default function Home() {
   }
 
   return (
-    <SafeAreaView className="max-h-sreen flex-1 bg-gray-200">
+    <View className="max-h-sreen flex-1 bg-gray-200">
       <FocusAwareStatusBar />
-      <View className="flex-1 flex-col">
+      {isLoading && (
+        <View className="absolute z-10 flex size-full items-center justify-center bg-black/30">
+          <View className="flex items-center justify-center rounded-lg bg-white p-4">
+            <ActivityIndicator size="large" color="#000" />
+          </View>
+        </View>
+      )}
+      <SafeAreaView className="flex-1 flex-col">
         <View className="flex flex-row  border border-gray-300 px-4">
           <View className="w-1/3 items-center border-x border-gray-300 py-4">
             <Text className="text-3xl font-semibold">Oxygen</Text>
@@ -103,9 +123,19 @@ export default function Home() {
             </Pressable>
             <Pressable
               className="flex w-1/4 flex-col items-center justify-center gap-y-2 border-r border-gray-300 py-6"
-              onPress={() => {
-                refetch();
-                refetchTokens();
+              onPress={async () => {
+                try {
+                  setIsLoading(true);
+                  await refetch();
+                  await refetchTokens();
+                } catch (error) {
+                  // console.error(error);
+                } finally {
+                  // wait 1 seconds before setting isLoading to false
+                  setTimeout(() => {
+                    setIsLoading(false);
+                  }, 1000);
+                }
               }}
             >
               <View className="aspect-square rounded-lg bg-black p-2">
@@ -224,7 +254,7 @@ export default function Home() {
             </View>
           )}
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </View>
   );
 }

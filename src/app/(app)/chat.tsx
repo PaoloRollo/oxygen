@@ -261,6 +261,7 @@ export default function Chat() {
             renderItem={({ item, index }) =>
               item.parts.map((part: any) => {
                 const result = part?.toolInvocation?.result;
+                const toolCallId = part?.toolInvocation?.toolCallId;
 
                 if (
                   result &&
@@ -272,7 +273,7 @@ export default function Chat() {
                 ) {
                   return (
                     <View
-                      key={`${part.type}-${index}-${item.role}-${part.id}`}
+                      key={`${part.type}-${index}-${item.role}-${part.id}-${toolCallId}`}
                       className="-mt-0"
                     />
                   );
@@ -280,7 +281,7 @@ export default function Chat() {
 
                 return (
                   <Message
-                    key={`${part.type}-${index}-${item.role}-${part.id}`}
+                    key={`${part.type}-${index}-${item.role}-${part.id}-${toolCallId}`}
                     part={part}
                     role={item.role}
                   />
